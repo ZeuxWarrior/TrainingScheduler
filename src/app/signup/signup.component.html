@@ -1,0 +1,27 @@
+<h2>Sign Up</h2>
+<form>
+  <div class="row">
+    <div class="col-md-6">
+      <label>First Name <span class="text-danger">*</span></label>
+      <input type="text" class="form-control" [(ngModel)]="firstName" name="firstName" />
+      <div [hidden]="firstName" class="text-danger">First Name is required!</div>
+      <label>Last Name <span class="text-danger">*</span></label>
+      <input type="text" class="form-control" [(ngModel)]="lastName" name="lastName" />
+      <div [hidden]="lastName" class="text-danger">Last Name is required!</div>
+      <label>Email <span class="text-danger">*</span></label>
+      <input type="text" class="form-control" [(ngModel)]="email" name="email" />
+      <div [hidden]="email" class="text-danger">Email Address is required!</div>
+      <label>Password <span class="text-danger">*</span></label>
+      <input type="password" class="form-control" [(ngModel)]="password" name="password" />
+      <div [hidden]="password" class="text-danger">Password is required!</div>
+      <label>Phone Number <span class="text-danger">*</span></label>
+      <input type="text" class="form-control" [(ngModel)]="phone" name="phone" maxlength="14" />
+      <div [hidden]="phone" class="text-danger">Phone Number is required!</div>
+    </div>
+    <div class="col-md-6">
+        <span class="text-danger">*</span> = Required
+    </div>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary" (click)="signUp()">Submit</button>
+</form>
