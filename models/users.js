@@ -22,17 +22,19 @@ module.exports = (sequelize, DataTypes) => {
           isNumeric: { msg: 'Not a valid phone number.' },
         },
       },
-      aboutMe: DataTypes.STRING,
-      password: DataTypes.STRING,
-    },
-    {
-      classMethods: {
-        associate: function(models) {
-          // associations can be defined here
-        },
+      userRoleId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
       },
-    },
-  );
+      aboutMe: DataTypes.STRING,
+      password: DataTypes.STRING
+    },{});
+  Users.associate = function(models) {
+    models.Users.belongsTo(models.UserRoles, {
+      foreignKey: 'userRoleId',
+      sourceKey: 'id'
+    });
+  };
   Users.beforeSave(async (user) => {
     let err;
     if (user.changed('password')) {
