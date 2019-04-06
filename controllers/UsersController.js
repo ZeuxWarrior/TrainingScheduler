@@ -21,7 +21,7 @@ const create = async function (req, res) {
 module.exports.create = create;
 
 const createUser = async function (userInfo) {
-  let err;
+  let err, user;
   if (validator.isEmail(userInfo.email)) {
     [err, user] = await to(Users.create(userInfo));
     if (err) TE('User already exists with that email');
@@ -79,12 +79,12 @@ const update = async function (req, res) {
   user.set(data);
   [err, user] = await to(user.save());
   if (err) {
-    if (typeof err == 'object' && typeof err.message != 'undefined') {
+    if (typeof err === 'object' && typeof err.message !== 'undefined') {
       err = err.message;
     }
 
     if (typeof code !== 'undefined') res.statusCode = code;
-    res.statusCode = 422
+    res.statusCode = 422;
     return res.json({ success: false, error: err });
   }
 

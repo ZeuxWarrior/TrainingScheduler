@@ -15,7 +15,7 @@ TE = function (errMessage, log) {
 };
 
 ReE = function (res, err, code) {
-  if (typeof err == 'object' && typeof err.message != 'undefined') {
+  if (typeof err === 'object' && typeof err.message !== 'undefined') {
     err = err.message;
   }
   if (typeof code !== 'undefined') res.statusCode = code;
