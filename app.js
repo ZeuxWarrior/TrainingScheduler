@@ -3,7 +3,11 @@ require('dotenv').config();
 require('./config/sync_config/config');
 const models = require('./models');
 require('./global_functions');
+
+// Controllers
 const userController = require('./controllers/UsersController');
+const eventController = require('./controllers/EventsController');
+
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const JwtStrategy = require('passport-jwt').Strategy;
@@ -69,6 +73,7 @@ if (CONFIG.app === 'dev') {
   models.sequelize.sync();
 }
 
+// Users
 app.post('/users', userController.create);
 app.put(
   '/users',
@@ -76,4 +81,12 @@ app.put(
   userController.update,
 );
 app.post('/login', userController.login);
+
+// Events
+app.post('/events', eventController.create);
+app.get('/events', eventController.getAll);
+app.get('/events/:id', eventController.get);
+app.put('/events', eventController.update);
+app.delete('/events/:id', eventController.delete);
+
 module.exports = app;
