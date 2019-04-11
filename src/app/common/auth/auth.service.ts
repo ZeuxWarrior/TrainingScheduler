@@ -39,8 +39,8 @@ export class AuthService {
 
     signup(firstName: string, lastName: string, email: string, password: string, phone: string): Observable<any> {
         let data = {
-            firstName: firstName,
-            lastName: lastName,
+            first: firstName,
+            last: lastName,
             email: email,
             password: password,
             phone: phone,
@@ -51,11 +51,11 @@ export class AuthService {
 
     update(userForm: FormGroup): Observable<any> {
         let data = {
-            firstName: userForm["firstName"],
-            lastName: userForm["lastName"],
-            email: userForm["email"],
-            password: userForm["password"],
-            phone: userForm["phone"]
+            first: userForm.value.firstName,
+            last: userForm.value.lastName,
+            email: userForm.value.email,
+            password: userForm.value.password,
+            phone: userForm.value.phone
         };
         return this.http.put<any>('http://localhost:3000/users', data);
     }
