@@ -84,9 +84,9 @@ app.post('/login', userController.login);
 
 // Events
 app.post('/events', eventController.create);
-app.get('/events', eventController.getAll);
-app.get('/events/:id', eventController.get);
-app.put('/events', eventController.update);
-app.delete('/events/:id', eventController.delete);
+app.get('/events', passport.authenticate('jwt', { session: false }), eventController.getAll);
+app.get('/events/:id', passport.authenticate('jwt', { session: false }), eventController.get);
+app.put('/events', passport.authenticate('jwt', { session: false }), eventController.update);
+app.delete('/events/:id', passport.authenticate('jwt', { session: false }), eventController.delete);
 
 module.exports = app;

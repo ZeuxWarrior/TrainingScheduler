@@ -45,8 +45,13 @@ module.exports.getAll = getAll;
 
 const update = async function (req, res) {
   let err, event, data;
-  event = req.event;
   data = req.body;
+
+  [err, event] = await to(Events.find({
+    where: { id: data.id }
+  }));
+  if (err) return ReE(res, err, 422);
+
   event.set(data);
   [err, event] = await to(event.save());
   if (err) return ReE(res, err, 422);

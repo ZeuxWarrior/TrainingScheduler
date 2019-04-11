@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../common/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './signup.component.html',
@@ -12,7 +14,7 @@ export class SignupComponent {
   password = '';
   phone = '';
   
-  constructor() { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   signUp(): void {
     const newUser = {
@@ -24,7 +26,10 @@ export class SignupComponent {
     };
 
     if (newUser.firstName && newUser.lastName && newUser.email && newUser.password && newUser.phone) {
-        console.log(newUser);
+        this.authService.signup(newUser.firstName, newUser.lastName, newUser.email, newUser.password, newUser.phone).
+          subscribe((response) => {
+            this.router.navigateByUrl('/login');
+          });
     }
 
   }
