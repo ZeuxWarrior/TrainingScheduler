@@ -15,6 +15,7 @@ import { LoginComponent } from './common/auth/login.component';
 import { TokenInterceptor } from './common/auth/token.interceptor';
 import { SignupComponent } from './signup/signup.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { EventListComponent } from './events/list/event-list.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     LoginComponent,
     SignupComponent,
     UserProfileComponent,
+    EventListComponent,
   ],
   imports: [
     BrowserModule,

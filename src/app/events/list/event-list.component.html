@@ -1,0 +1,13 @@
+<h2>Current Events</h2>
+<div class="row" [formGroup]="searchForm">
+  <div class="col-md-8">
+    <label>Search:</label>
+    <input class="form-control" formControlName="query" placeholder="Enter text to search..." />
+  </div>
+</div>
+<br />
+<div class="list-group">
+  <a *ngFor="let event of events" class="list-group-item list-group-item-action" routerLink="/events/{{ event.id }}">
+    {{ event.name }}
+  </a>
+</div>

@@ -44,7 +44,8 @@ export class UserProfileComponent {
   }
 
   save(): void {
-      this.authService.update(this.userUpdateForm).
+      let user = this.userUpdateForm.value;
+      this.authService.update(user).
         subscribe((response) => {
           this.saved = true;
           setTimeout(() => {

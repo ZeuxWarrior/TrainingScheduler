@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import 'rxjs/add/operator/do';
-import { FormGroup } from '@angular/forms';
+import { IUser } from 'src/app/common/users';
 
 export interface ILoginResponse {
     success: boolean;
@@ -49,13 +49,13 @@ export class AuthService {
         return this.http.post<any>('http://localhost:3000/users', data);
     }
 
-    update(userForm: FormGroup): Observable<any> {
+    update(userForm: IUser): Observable<any> {
         let data = {
-            first: userForm.value.firstName,
-            last: userForm.value.lastName,
-            email: userForm.value.email,
-            password: userForm.value.password,
-            phone: userForm.value.phone
+            first: userForm.firstName,
+            last: userForm.lastName,
+            email: userForm.email,
+            password: userForm.password,
+            phone: userForm.phone
         };
         return this.http.put<any>('http://localhost:3000/users', data);
     }

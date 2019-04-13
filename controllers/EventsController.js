@@ -35,8 +35,21 @@ module.exports.get = get;
 
 const getAll = async function (req, res) {
     let err, events;
-
-    [err, events] = await to(Events.findAll());
+    let whereStatement = {};
+    if (req.query.name) {
+        whereStatement.name = {
+            $like: '%' + req.query.name + '%'
+        };
+    }
+    if (req.query.isCompleted) {
+        whereStatement.isCompleted = {
+            $eq: (req.query.isCompleted === 'true')
+        };
+    }
+    whereStatement.userId = {
+        $eq: req.user.id
+    };
+    [err, events] = await to(Events.findAll({ where: whereStatement }));
     if (err) return ReE(res, err, 404);
 
     return ReS(res, events, 200);
@@ -47,13 +60,9 @@ const update = async function (req, res) {
   let err, event, data;
   data = req.body;
 
-  [err, event] = await to(Events.find({
-    where: { id: data.id }
+  [err, event] = await to(Events.update(data, {
+      where: { id: data.id }
   }));
-  if (err) return ReE(res, err, 422);
-
-  event.set(data);
-  [err, event] = await to(event.save());
   if (err) return ReE(res, err, 422);
 
   return ReS(res, event, 200);
