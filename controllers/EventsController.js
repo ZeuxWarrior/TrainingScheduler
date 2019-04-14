@@ -46,9 +46,6 @@ const getAll = async function (req, res) {
             $eq: (req.query.isCompleted === 'true')
         };
     }
-    whereStatement.userId = {
-        $eq: req.user.id
-    };
     [err, events] = await to(Events.findAll({ where: whereStatement }));
     if (err) return ReE(res, err, 404);
 

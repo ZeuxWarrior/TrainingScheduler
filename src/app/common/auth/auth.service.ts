@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import 'rxjs/add/operator/do';
-import { IUser } from 'src/app/common/users';
+import { IUser } from '../users';
 
 export interface ILoginResponse {
     success: boolean;

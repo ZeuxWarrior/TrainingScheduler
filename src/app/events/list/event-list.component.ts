@@ -6,8 +6,7 @@ import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-list',
-  templateUrl: './event-list.component.html',
-  styleUrls: ['./event-list.component.less']
+  templateUrl: './event-list.component.html'
 })
 export class EventListComponent implements OnInit {
 
