@@ -17,6 +17,11 @@ import { SignupComponent } from './signup/signup.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EventListComponent } from './events/list/event-list.component';
 import { EventInfoComponent } from './events/info/event-info.component';
+import { VenueInfoComponent } from './sessions/info/venue-info/venue-info.component';
+import { SessionListComponent } from './sessions/list/session-list.component';
+import { SessionInfoComponent } from './sessions/info/session-info.component';
+import { ScheduleListComponent } from './schedule/list/schedule-list.component';
+import { EditScheduleComponent } from './schedule/edit/edit-schedule.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +32,11 @@ import { EventInfoComponent } from './events/info/event-info.component';
     UserProfileComponent,
     EventListComponent,
     EventInfoComponent,
+    VenueInfoComponent,
+    SessionListComponent,
+    SessionInfoComponent,
+    ScheduleListComponent,
+    EditScheduleComponent,
   ],
   imports: [
     BrowserModule,

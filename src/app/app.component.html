@@ -17,7 +17,7 @@
     <div class="float-right">
       <ul *ngIf="loggedIn" class="navbar-nav">
         <li class="navbar-brand">
-          Hello, <!-- {{ firstName }} -->!
+          Hello, {{ user.firstName }}!
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/profile">Profile</a>

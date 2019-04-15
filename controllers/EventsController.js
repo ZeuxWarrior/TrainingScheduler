@@ -5,6 +5,10 @@ const create = async function (req, res) {
   res.setHeader('ContentType', 'application/json');
   let body = req.body;
 
+  if (req.user.userRoleId !== 1){
+    return ReE(res, 'Access Denied', 401);
+  }
+
   /*if (!body.email) {
     return ReE(res, 'Please enter an email to register', 422);
   } else if (!body.password) {
@@ -57,6 +61,10 @@ const update = async function (req, res) {
   let err, event, data;
   data = req.body;
 
+  if (req.user.userRoleId !== 1){
+    return ReE(res, 'Access Denied', 401);
+  }
+
   [err, event] = await to(Events.update(data, {
       where: { id: data.id }
   }));
@@ -69,6 +77,10 @@ module.exports.update = update;
 const deleted = async function (req, res) {
     let err, event, data;
     data = req.params.id;
+
+    if (req.user.userRoleId !== 1){
+      return ReE(res, 'Access Denied', 401);
+    }
 
     [err, event] = await to(Events.destroy({
         where: { id: data }

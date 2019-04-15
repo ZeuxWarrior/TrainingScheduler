@@ -38,7 +38,7 @@ const login = async function (req, res) {
 
   [err, user] = await to(authUser(req.body));
   if (err) return ReE(res, err, 422);
-
+  else user.password = null; // Don't send the password back! Unsafe!
   return ReS(res, { token: user.getJWT(), user: user.toJSON() });
 }
 module.exports.login = login;
