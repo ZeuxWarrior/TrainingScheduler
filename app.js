@@ -7,6 +7,8 @@ require('./global_functions');
 // Controllers
 const userController = require('./controllers/UsersController');
 const eventController = require('./controllers/EventsController');
+const sessionController = require('./controllers/SessionsController');
+const venueController = require('./controllers/VenueController');
 
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -83,10 +85,24 @@ app.put(
 app.post('/login', userController.login);
 
 // Events
-app.post('/events', eventController.create);
+app.post('/events', passport.authenticate('jwt', { session: false }), eventController.create);
 app.get('/events', passport.authenticate('jwt', { session: false }), eventController.getAll);
 app.get('/events/:id', passport.authenticate('jwt', { session: false }), eventController.get);
 app.put('/events', passport.authenticate('jwt', { session: false }), eventController.update);
 app.delete('/events/:id', passport.authenticate('jwt', { session: false }), eventController.delete);
+
+// Sessions
+app.post('/sessions', passport.authenticate('jwt', { session: false }), sessionController.create);
+app.get('/sessions', passport.authenticate('jwt', { session: false }), sessionController.getAll);
+app.get('/sessions/:id', passport.authenticate('jwt', { session: false }), sessionController.get);
+app.put('/sessions', passport.authenticate('jwt', { session: false }), sessionController.update);
+app.delete('/sessions/:id', passport.authenticate('jwt', { session: false}), sessionController.delete);
+
+// Venues
+app.post('/venues', passport.authenticate('jwt', { session: false }), venueController.create);
+app.get('/venues', passport.authenticate('jwt', { session: false }), venueController.getAll);
+app.get('/venues/:id', passport.authenticate('jwt', { session: false }), venueController.get);
+app.put('/venues', passport.authenticate('jwt', { session: false }), venueController.update);
+app.delete('/venues/:id', passport.authenticate('jwt', { session: false }), venueController.delete);
 
 module.exports = app;

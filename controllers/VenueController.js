@@ -1,10 +1,10 @@
-const Events = require('../models').Events;
+const Venues = require('../models').Venues;
 
 const create = async function (req, res) {
   res.setHeader('ContentType', 'application/json');
   let body = req.body;
 
-  if (req.user.userRoleId !== 1){
+  if (user.userRoleId !== 1){
     return ReE(res, 'Access Denied', 401);
   }
 
@@ -13,31 +13,31 @@ const create = async function (req, res) {
   } else if (!body.password) {
     return ReE(res, 'Please enter a password to register', 422);
   } else {*/
-    let err, event;
+    let err, venue;
 
-    [err, event] = await to(Events.create(body));
+    [err, venue] = await to(Venues.create(body));
     if (err) return ReE(res, err, 422);
 
-    return ReS(res, event, 201);
+    return ReS(res, venue, 201);
   //}
 };
 module.exports.create = create;
 
 const get = async function (req, res) {
-    let err, event, data;
+    let err, venue, data;
     data = req.params.id;
 
-    [err, event] = await to(Events.find({
+    [err, venue] = await to(Venues.find({
         where: { id: data }
     }));
     if (err) return ReE(res, err, 422);
 
-    return ReS(res, event, 200);
+    return ReS(res, venue, 200);
 };
 module.exports.get = get;
 
 const getAll = async function (req, res) {
-    let err, events;
+    let err, venues;
     let whereStatement = {};
     if (req.query.name) {
         whereStatement.name = {
@@ -49,43 +49,45 @@ const getAll = async function (req, res) {
             $eq: (req.query.isCompleted === 'true')
         };
     }
-    [err, events] = await to(Events.findAll({ where: whereStatement }));
+    [err, venues] = await to(Venues.findAll({
+        where: whereStatement
+    }));
     if (err) return ReE(res, err, 404);
 
-    return ReS(res, events, 200);
+    return ReS(res, venues, 200);
 };
 module.exports.getAll = getAll;
 
 const update = async function (req, res) {
-  let err, event, data;
+  let err, venue, data;
   data = req.body;
 
   if (req.user.userRoleId !== 1){
     return ReE(res, 'Access Denied', 401);
   }
 
-  [err, event] = await to(Events.update(data, {
+  [err, venue] = await to(Venues.update(data, {
       where: { id: data.id }
   }));
   if (err) return ReE(res, err, 422);
 
-  return ReS(res, event, 200);
+  return ReS(res, venue, 200);
 };
 module.exports.update = update;
 
 const deleted = async function (req, res) {
-    let err, event, data;
+    let err, venue, data;
     data = req.params.id;
 
     if (req.user.userRoleId !== 1){
       return ReE(res, 'Access Denied', 401);
     }
 
-    [err, event] = await to(Events.destroy({
+    [err, venue] = await to(Venues.destroy({
         where: { id: data }
     }));
     if (err) return ReE(res, err, 422);
 
-    return ReS(res, event, 200);
+    return ReS(res, venue, 200);
 };
 module.exports.delete = deleted;

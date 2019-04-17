@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       unique: 'compositeEvent'
     },
+    trainerId: DataTypes.INTEGER,
     roomNum: DataTypes.STRING,
     startTime: DataTypes.DATE,
     endTime: DataTypes.DATE,
@@ -24,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
     });
     models.Sessions.belongsTo(models.Venues, {
       foreignKey: "venueId",
+      sourceKey: "id"
+    });
+    models.Sessions.belongsTo(models.Users, {
+      foreignKey: "trainerId",
       sourceKey: "id"
     });
   };

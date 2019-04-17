@@ -1,10 +1,11 @@
-const Events = require('../models').Events;
+const Sessions = require('../models').Sessions;
 
 const create = async function (req, res) {
   res.setHeader('ContentType', 'application/json');
   let body = req.body;
+  let user = req.user;
 
-  if (req.user.userRoleId !== 1){
+  if (!user.isTrainer && user.userRoleId !== 1){
     return ReE(res, 'Access Denied', 401);
   }
 
@@ -13,34 +14,37 @@ const create = async function (req, res) {
   } else if (!body.password) {
     return ReE(res, 'Please enter a password to register', 422);
   } else {*/
-    let err, event;
+    let err, session;
+    if (user.isTrainer) {
+        body.trainerId = user.id;
+    }
 
-    [err, event] = await to(Events.create(body));
+    [err, session] = await to(Sessions.create(body));
     if (err) return ReE(res, err, 422);
 
-    return ReS(res, event, 201);
+    return ReS(res, session, 201);
   //}
 };
 module.exports.create = create;
 
 const get = async function (req, res) {
-    let err, event, data;
+    let err, session, data;
     data = req.params.id;
 
-    [err, event] = await to(Events.find({
+    [err, session] = await to(Sessions.find({
         where: { id: data }
     }));
     if (err) return ReE(res, err, 422);
 
-    return ReS(res, event, 200);
+    return ReS(res, session, 200);
 };
 module.exports.get = get;
 
 const getAll = async function (req, res) {
-    let err, events;
+    let err, sessions;
     let whereStatement = {};
     if (req.query.name) {
-        whereStatement.name = {
+        whereStatement.topicName = {
             $like: '%' + req.query.name + '%'
         };
     }
@@ -49,43 +53,57 @@ const getAll = async function (req, res) {
             $eq: (req.query.isCompleted === 'true')
         };
     }
-    [err, events] = await to(Events.findAll({ where: whereStatement }));
+    if (req.user.isTrainer) {
+        whereStatement.trainerId = {
+            $eq: req.user.id
+        };
+    }
+    [err, sessions] = await to(Sessions.findAll({
+        include: [{
+            model: Events
+        },{
+            model: Venues
+        },{
+            model: Users
+        }],
+        where: whereStatement
+    }));
     if (err) return ReE(res, err, 404);
 
-    return ReS(res, events, 200);
+    return ReS(res, sessions, 200);
 };
 module.exports.getAll = getAll;
 
 const update = async function (req, res) {
-  let err, event, data;
+  let err, session, data;
   data = req.body;
 
-  if (req.user.userRoleId !== 1){
+  if (!req.user.isTrainer && req.user.userRoleId !== 1){
     return ReE(res, 'Access Denied', 401);
   }
 
-  [err, event] = await to(Events.update(data, {
+  [err, session] = await to(Sessions.update(data, {
       where: { id: data.id }
   }));
   if (err) return ReE(res, err, 422);
 
-  return ReS(res, event, 200);
+  return ReS(res, session, 200);
 };
 module.exports.update = update;
 
 const deleted = async function (req, res) {
-    let err, event, data;
+    let err, session, data;
     data = req.params.id;
 
     if (req.user.userRoleId !== 1){
       return ReE(res, 'Access Denied', 401);
     }
 
-    [err, event] = await to(Events.destroy({
+    [err, session] = await to(Sessions.destroy({
         where: { id: data }
     }));
     if (err) return ReE(res, err, 422);
 
-    return ReS(res, event, 200);
+    return ReS(res, session, 200);
 };
 module.exports.delete = deleted;
