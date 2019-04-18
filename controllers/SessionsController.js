@@ -60,11 +60,14 @@ const getAll = async function (req, res) {
     }
     [err, sessions] = await to(Sessions.findAll({
         include: [{
-            model: Events
+            model: Events,
+            attributes: ['id', 'name']
         },{
-            model: Venues
+            model: Venues,
+            attributes: ['id', 'name']
         },{
-            model: Users
+            model: Users,
+            attributes: ['id', 'first', 'last']
         }],
         where: whereStatement
     }));

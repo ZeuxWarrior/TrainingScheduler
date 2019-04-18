@@ -10,6 +10,7 @@ export class AppComponent implements OnInit {
 
   loggedIn = false;
   user = null;
+  isAdmin = false;
 
   constructor(
     private authService: AuthService,
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
       .subscribe((token) => this.loggedIn = token ? true : false);
     this.authService.user.
       subscribe((user) => this.user = user);
+    this.isAdmin = this.authService.isAdmin();
   }
 
   logout(): void {

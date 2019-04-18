@@ -1,3 +1,19 @@
-<p>
-  session-list works!
-</p>
+<h2>Current Sessions</h2>
+<div class="row" [formGroup]="searchForm">
+  <div class="col-md-8">
+    <label>Search:</label>
+    <input class="form-control" formControlName="query" placeholder="Enter text to search..." />
+  </div>
+</div>
+<br />
+<div *ngIf="canAdd" class="row">
+  <div class="col-md-6">
+    <button class="btn btn-primary" routerLink="/sessions/add">Add New Event</button>
+  </div>
+</div>
+<div class="list-group">
+  <a *ngFor="let session of sessions" class="list-group-item list-group-item-action" routerLink="/sessions/{{ session.id }}">
+    {{ session.topicName }}
+  </a>
+</div>
+

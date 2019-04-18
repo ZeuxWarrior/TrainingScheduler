@@ -91,3 +91,21 @@ const update = async function (req, res) {
   return res.json(user);
 }
 module.exports.update = update;
+
+const getAllTrainers = async function (req, res) {
+    let err, trainers;
+    let whereStatement = { isTrainer: true };
+    if (req.query.id) {
+        whereStatement.id = req.query.id;
+    }
+    if (req.query.isCompleted) {
+        whereStatement.isCompleted = {
+            $eq: (req.query.isCompleted === 'true')
+        };
+    }
+    [err, trainers] = await to(Users.findAll({ where: whereStatement }));
+    if (err) return ReE(res, err, 404);
+
+    return ReS(res, trainers, 200);
+}
+module.exports.getAllTrainers = getAllTrainers;

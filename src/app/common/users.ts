@@ -1,5 +1,5 @@
 export interface IUser {
-    // Don't need ID like other interfaces, because the current user already has it
+    id?: number;
     firstName: string;
     lastName: string;
     email: string;

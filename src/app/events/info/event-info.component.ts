@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../events.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { IEvent } from '../events';
 
 @Component({
   selector: 'app-event-info',
@@ -19,7 +20,7 @@ export class EventInfoComponent implements OnInit {
 
   saved = false;
 
-  event: any;
+  event: IEvent;
 
   constructor(private eventsService: EventsService, private activeRoute: ActivatedRoute) { }
 

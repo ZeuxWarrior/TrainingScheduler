@@ -28,6 +28,10 @@ export class AuthService {
         return this.user && this.user.getValue().userRoleId === UserRoles.Admin ? true : false;
     }
 
+    isTrainer(): boolean {
+        return this.user && this.user.getValue().isTrainer ? true : false;
+    }
+
     login(email: string, password: string): Observable<ILoginResponse> {
         const data = {
             email: email,
@@ -56,7 +60,7 @@ export class AuthService {
         return this.http.post<any>('http://localhost:3000/users', data);
     }
 
-    update(userForm: IUser): Observable<any> {
+    update(userForm: IUser): Observable<IUser> {
         let data = {
             first: userForm.firstName,
             last: userForm.lastName,
@@ -64,6 +68,14 @@ export class AuthService {
             password: userForm.password,
             phone: userForm.phone
         };
-        return this.http.put<any>('http://localhost:3000/users', data);
+        return this.http.put<IUser>('http://localhost:3000/users', data);
+    }
+
+    getAllTrainers(id: number = 0): Observable<IUser[]> {
+        if (id) {
+            return this.http.get<IUser[]>(`http://localhost:3000/trainers?id=${id}`);
+        } else {
+            return this.http.get<IUser[]>('http://localhost:3000/trainers');
+        }
     }
 }

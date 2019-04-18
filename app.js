@@ -83,6 +83,7 @@ app.put(
   userController.update,
 );
 app.post('/login', userController.login);
+app.get('/trainers', userController.getAllTrainers);
 
 // Events
 app.post('/events', passport.authenticate('jwt', { session: false }), eventController.create);
