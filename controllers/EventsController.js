@@ -44,11 +44,7 @@ const getAll = async function (req, res) {
             $like: '%' + req.query.name + '%'
         };
     }
-    if (req.query.isCompleted) {
-        whereStatement.isCompleted = {
-            $eq: (req.query.isCompleted === 'true')
-        };
-    }
+    
     [err, events] = await to(Events.findAll({ where: whereStatement }));
     if (err) return ReE(res, err, 404);
 
@@ -86,6 +82,6 @@ const deleted = async function (req, res) {
     }));
     if (err) return ReE(res, err, 422);
 
-    return ReS(res, event, 200);
+    return ReS(res, event, 204);
 };
 module.exports.delete = deleted;

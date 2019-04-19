@@ -15,21 +15,22 @@ export class AuthService {
 
     token: BehaviorSubject<string> = new BehaviorSubject<string>(null);
     user: BehaviorSubject<IUser> = new BehaviorSubject<IUser>(null);
+    userValue: IUser;
 
     constructor(
         private http: HttpClient,
     ) { }
 
     isAuthenticated(): boolean {
-        return this.token ? true : false;
+        return this.token.getValue() ? true : false;
     }
 
     isAdmin(): boolean {
-        return this.user && this.user.getValue().userRoleId === UserRoles.Admin ? true : false;
+        return this.userValue && this.userValue.userRoleId === UserRoles.Admin ? true : false;
     }
 
     isTrainer(): boolean {
-        return this.user && this.user.getValue().isTrainer ? true : false;
+        return this.userValue && this.userValue.isTrainer ? true : false;
     }
 
     login(email: string, password: string): Observable<ILoginResponse> {
@@ -41,6 +42,7 @@ export class AuthService {
             .do((response) => {
                 this.token.next(response && response.success && response.token || null);
                 this.user.next(response && response.success && response.user || null);
+                this.userValue = this.user && this.user.getValue();
             });
     }
 
@@ -50,8 +52,8 @@ export class AuthService {
 
     signup(firstName: string, lastName: string, email: string, password: string, phone: string): Observable<any> {
         let data = {
-            first: firstName,
-            last: lastName,
+            firstName: firstName,
+            lastName: lastName,
             email: email,
             password: password,
             phone: phone,
@@ -62,8 +64,8 @@ export class AuthService {
 
     update(userForm: IUser): Observable<IUser> {
         let data = {
-            first: userForm.firstName,
-            last: userForm.lastName,
+            firstName: userForm.firstName,
+            lastName: userForm.lastName,
             email: userForm.email,
             password: userForm.password,
             phone: userForm.phone

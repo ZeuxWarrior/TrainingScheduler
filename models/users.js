@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
   var Users = sequelize.define(
     'Users',
     {
-      first: DataTypes.STRING,
-      last: DataTypes.STRING,
+      firstName: DataTypes.STRING,
+      lastName: DataTypes.STRING,
       email: {
         type: DataTypes.STRING,
         unique: true,

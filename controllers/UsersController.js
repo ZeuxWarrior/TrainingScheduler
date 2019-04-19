@@ -98,11 +98,7 @@ const getAllTrainers = async function (req, res) {
     if (req.query.id) {
         whereStatement.id = req.query.id;
     }
-    if (req.query.isCompleted) {
-        whereStatement.isCompleted = {
-            $eq: (req.query.isCompleted === 'true')
-        };
-    }
+    
     [err, trainers] = await to(Users.findAll({ where: whereStatement }));
     if (err) return ReE(res, err, 404);
 

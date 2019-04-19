@@ -48,27 +48,13 @@ const getAll = async function (req, res) {
             $like: '%' + req.query.name + '%'
         };
     }
-    if (req.query.isCompleted) {
-        whereStatement.isCompleted = {
-            $eq: (req.query.isCompleted === 'true')
-        };
-    }
+    
     if (req.user.isTrainer) {
         whereStatement.trainerId = {
             $eq: req.user.id
         };
     }
     [err, sessions] = await to(Sessions.findAll({
-        include: [{
-            model: Events,
-            attributes: ['id', 'name']
-        },{
-            model: Venues,
-            attributes: ['id', 'name']
-        },{
-            model: Users,
-            attributes: ['id', 'first', 'last']
-        }],
         where: whereStatement
     }));
     if (err) return ReE(res, err, 404);
@@ -107,6 +93,6 @@ const deleted = async function (req, res) {
     }));
     if (err) return ReE(res, err, 422);
 
-    return ReS(res, session, 200);
+    return ReS(res, session, 204);
 };
 module.exports.delete = deleted;
