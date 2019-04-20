@@ -10,12 +10,24 @@ export class EventsService {
 
   constructor(private http: HttpClient) { }
 
-  getById(id: number): Observable<IEvent> {
-    return this.http.get<IEvent>(`http://localhost:3000/events/${id}`);
+  getById(id: number, showSessions?: boolean): Observable<IEvent> {
+    if (showSessions) {
+      return this.http.get<IEvent>(`http://localhost:3000/events/${id}?showSessions=true`);
+    } else {
+      return this.http.get<IEvent>(`http://localhost:3000/events/${id}`);
+    }
   }
 
-  getByName(text: string): Observable<IEvent[]> {
-    return this.http.get<IEvent[]>(`http://localhost:3000/events?name=${text}`);
+  getByName(text: string, active?: boolean, trainerId?: number): Observable<IEvent[]> {
+    if (active) {
+      if (trainerId) {
+        return this.http.get<IEvent[]>(`http://localhost:3000/events?name=${text}&active=true&trainerId=${trainerId}`);
+      } else {
+        return this.http.get<IEvent[]>(`http://localhost:3000/events?name=${text}&active=true`);
+      }
+    } else {
+      return this.http.get<IEvent[]>(`http://localhost:3000/events?name=${text}`);
+    }
   }
 
   saveEvent(event: IEvent): Observable<IEvent> {

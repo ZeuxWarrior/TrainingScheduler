@@ -9,6 +9,7 @@ const userController = require('./controllers/UsersController');
 const eventController = require('./controllers/EventsController');
 const sessionController = require('./controllers/SessionsController');
 const venueController = require('./controllers/VenueController');
+const scheduleController = require('./controllers/ScheduleController');
 
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -105,5 +106,11 @@ app.get('/venues', passport.authenticate('jwt', { session: false }), venueContro
 app.get('/venues/:id', passport.authenticate('jwt', { session: false }), venueController.get);
 app.put('/venues', passport.authenticate('jwt', { session: false }), venueController.update);
 app.delete('/venues/:id', passport.authenticate('jwt', { session: false }), venueController.delete);
+
+// Schedule
+app.post('/schedule', passport.authenticate('jwt', { session: false }), scheduleController.create);
+app.get('/schedule', passport.authenticate('jwt', { session: false }), scheduleController.getAll);
+app.get('/schedule/:id', passport.authenticate('jwt', { session: false }), scheduleController.get);
+app.delete('/schedule/:id', passport.authenticate('jwt', { session: false }), scheduleController.delete);
 
 module.exports = app;

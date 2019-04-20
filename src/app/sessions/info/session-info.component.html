@@ -10,7 +10,10 @@
   </div>
   <div class="row">
     <div class="col-md-6"><label>Event <span class="text-danger">*</span></label>
-      <select formControlName="eventId" ng-options="event.id as event.name for event in events"></select>
+      <select class="form-control" formControlName="eventId">
+        <option ngValue="0">Select an event...</option>
+        <option *ngFor="let event of events" [ngValue]="event.id">{{ event.name }}</option>
+      </select>
       <div *ngIf="eventId.invalid && (eventId.dirty || eventId.touched)" class="text-danger">
         <div *ngIf="eventId.errors.min">
           You must select an event!
@@ -20,7 +23,10 @@
   </div>
   <div class="row">
     <div class="col-md-6"><label>Trainer <span class="text-danger">*</span></label>
-      <select formControlName="trainerId" ng-options="user.id as user.firstName + ' ' + user.lastName for user in users"></select>
+      <select class="form-control" formControlName="trainerId">
+        <option ngValue="0">Select a trainer...</option>
+        <option *ngFor="let user of users" [ngValue]="user.id">{{ user.firstName + ' ' + user.lastName }}</option>
+      </select>
       <div *ngIf="trainerId.invalid && (trainerId.dirty || trainerId.touched)" class="text-danger">
         <div *ngIf="trainerId.errors.min">
           You must select a trainer to run this session!
@@ -30,7 +36,10 @@
   </div>
   <div class="row">
     <div class="col-md-6"><label>Venue <span class="text-danger">*</span></label>
-      <select formControlName="venueId" ng-options="venue.id as venue.name for venue in venues"></select>
+      <select class="form-control" formControlName="venueId">
+        <option ngValue="0">Select a venue...</option>
+        <option *ngFor="let venue of venues" [ngValue]="venue.id">{{ venue.name }}</option>
+      </select>
       <div *ngIf="venueId.invalid && (venueId.dirty || venueId.touched)" class="text-danger">
         <div *ngIf="venueId.errors.min">
           You must select a venue!

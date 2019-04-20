@@ -27,7 +27,17 @@ const get = async function (req, res) {
     let err, event, data;
     data = req.params.id;
 
+    let includeStatement = [];
+    if (req.query.showSessions) {
+      includeStatement = [{
+        model: "Sessions",
+        attributes: ["topicName", "startTime", "endTime"],
+        order: [["startTime","ASC"]]
+      }];
+    }
+
     [err, event] = await to(Events.find({
+        include: includeStatement,
         where: { id: data }
     }));
     if (err) return ReE(res, err, 422);
@@ -38,14 +48,30 @@ module.exports.get = get;
 
 const getAll = async function (req, res) {
     let err, events;
-    let whereStatement = {};
+    let whereStatement = {}, orderStatement = [];
     if (req.query.name) {
         whereStatement.name = {
             $like: '%' + req.query.name + '%'
         };
     }
+
+    if (req.query.active) {
+        whereStatement.startDate = {
+            $gte: Sequelize.NOW()
+        };
+        orderStatement = [["startDate","ASC"]];
+    }
+
+    if (req.query.trainerId) {
+        whereStatement.trainerId = {
+          $eq: req.query.trainerId
+        }
+    }
     
-    [err, events] = await to(Events.findAll({ where: whereStatement }));
+    [err, events] = await to(Events.findAll({
+        where: whereStatement,
+        order: orderStatement
+    }));
     if (err) return ReE(res, err, 404);
 
     return ReS(res, events, 200);
