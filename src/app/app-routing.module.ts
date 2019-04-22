@@ -12,6 +12,8 @@ import { SessionInfoComponent } from './sessions/info/session-info.component';
 import { TrainerGuard } from './common/auth/trainer.guard';
 import { SessionListComponent } from './sessions/list/session-list.component';
 import { VenueInfoComponent } from './sessions/info/venue-info/venue-info.component';
+import { EventPickerComponent } from './schedule/picker/event-picker.component';
+import { ScheduleAddComponent } from './schedule/add/schedule-add.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -24,6 +26,8 @@ const appRoutes: Routes = [
   { path: 'sessions/:id', component: SessionInfoComponent, canActivate: [AuthGuard] },
   { path: 'sessions', component: SessionListComponent, canActivate: [AuthGuard] },
   { path: 'venues/:id', component: VenueInfoComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'schedule/:id', component: ScheduleAddComponent, canActivate: [AuthGuard] },
+  { path: 'schedule', component: EventPickerComponent, canActivate: [AuthGuard] },
   { path: '**', component: HomeComponent }
 ];
 

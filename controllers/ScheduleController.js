@@ -53,7 +53,7 @@ const getAll = async function (req, res) {
         };
     }
     
-    if (req.user.userRoleId !== 1) {
+    if (!req.query.getAll) {
         whereStatement.userId = {
             $eq: req.user.id
         };

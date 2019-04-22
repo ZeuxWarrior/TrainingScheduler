@@ -1,0 +1,21 @@
+<h2>Select an Event to add!</h2>
+<div class="row" [formGroup]="searchForm">
+  <div class="col-md-4">
+    <label>Search:</label>
+    <input class="form-control" formControlName="query" placeholder="Enter text to search..." />
+  </div>
+  <div class="col-md-4">
+    <label>Trainer:</label>
+    <select class="form-control" formControlName="trainer">
+      <option ngValue="0">Any trainer</option>
+      <option *ngFor="let trainer of trainers" [ngValue]="trainer.id">{{ trainer.firstName + " " + trainer.lastName }}</option>
+    </select>
+  </div>
+</div>
+<br />
+<div class="list-group">
+  <a *ngFor="let event of events" class="list-group-item list-group-item-action" routerLink="/schedule/{{ event.id }}">
+    {{ event.name }}
+    <span class="float-right">Starts: {{ event.startDate | date:'short' }}</span>
+  </a>
+</div>

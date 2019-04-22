@@ -14,8 +14,12 @@ export class ScheduleService {
     return this.http.get<ISchedule>(`http://localhost:3000/schedule/${id}`);
   }
 
-  getByName(text: string): Observable<ISchedule[]> {
-    return this.http.get<ISchedule[]>(`http://localhost:3000/schedule?name=${text}`);
+  getByName(text: string, getAll?: boolean): Observable<ISchedule[]> {
+    if (getAll) {
+      return this.http.get<ISchedule[]>(`http://localhost:3000/schedule?name=${text}&getAll=true`);
+    } else {
+      return this.http.get<ISchedule[]>(`http://localhost:3000/schedule?name=${text}`);
+    }
   }
 
   saveSchedule(schedule: ISchedule) {

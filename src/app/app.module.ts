@@ -22,6 +22,8 @@ import { SessionListComponent } from './sessions/list/session-list.component';
 import { SessionInfoComponent } from './sessions/info/session-info.component';
 import { ScheduleListComponent } from './schedule/list/schedule-list.component';
 import { EditScheduleComponent } from './schedule/edit/edit-schedule.component';
+import { EventPickerComponent } from './schedule/picker/event-picker.component';
+import { ScheduleAddComponent } from './schedule/add/schedule-add.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { EditScheduleComponent } from './schedule/edit/edit-schedule.component';
     SessionInfoComponent,
     ScheduleListComponent,
     EditScheduleComponent,
+    EventPickerComponent,
+    ScheduleAddComponent,
   ],
   imports: [
     BrowserModule,

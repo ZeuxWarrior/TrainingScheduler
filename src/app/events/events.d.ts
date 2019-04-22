@@ -1,3 +1,5 @@
+import { ISession } from "../sessions/sessions";
+
 export interface IEvent {
     id: number;
     name: string;
@@ -5,4 +7,5 @@ export interface IEvent {
     startDate: Date;
     price: number;
     attendanceLimit: number;
+    Sessions?: ISession[];
 }
