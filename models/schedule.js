@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       unique: 'compositeSession'
     },
-    sessionId: {
+    eventId: {
       type: DataTypes.INTEGER,
       unique: 'compositeSession'
     }
@@ -15,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "userId",
       sourceKey: "id"
     });
-    models.Schedule.belongsTo(models.Sessions, {
-      foreignKey: "sessionId",
+    models.Schedule.belongsTo(models.Events, {
+      foreignKey: "eventId",
       sourceKey: "id"
     });
   };
