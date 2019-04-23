@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Schedule = sequelize.define('Schedule', {
+  const Schedule = sequelize.define('Schedules', {
     userId: {
       type: DataTypes.INTEGER,
       unique: 'compositeSession'

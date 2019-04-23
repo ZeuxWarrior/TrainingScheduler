@@ -2,10 +2,10 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return Promise.all([
-      queryInterface.sequelize.query(queryInterface.QueryGenerator.dropForeignKeyQuery("Schedule","sessionId")),
-      queryInterface.renameColumn("Schedule","sessionId","eventId"),
-      queryInterface.changeColumn("Schedule","eventId", {
+    return queryInterface.sequelize.query(queryInterface.QueryGenerator.dropForeignKeyQuery("Schedules","sessionId")).
+      then(queryInterface.renameColumn("Schedules","sessionId","eventId")).
+      then(queryInterface.changeColumn("Schedules","eventId", {
+        type: Sequelize.INTEGER,
         references: {
           model: 'Events',
           key: 'id'
@@ -13,14 +13,14 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       })
-    ]);
+    );
   },
 
   down: (queryInterface, Sequelize) => {
-    return Promise.all([
-      queryInterface.sequelize.query(queryInterface.QueryGenerator.dropForeignKeyQuery("Schedule","eventId")),
-      queryInterface.renameColumn("Schedule","eventId","sessionId"),
-      queryInterface.changeColumn("Schedule","sessionId", {
+    return queryInterface.sequelize.query(queryInterface.QueryGenerator.dropForeignKeyQuery("Schedules","eventId")).
+      then(queryInterface.renameColumn("Schedules","eventId","sessionId")).
+      then(queryInterface.changeColumn("Schedules","sessionId", {
+        type: Sequelize.INTEGER,
         references: {
           model: 'Sessions',
           key: 'id'
@@ -28,6 +28,6 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       })
-    ]);
+    );
   }
 };
