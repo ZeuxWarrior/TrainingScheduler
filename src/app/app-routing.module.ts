@@ -14,11 +14,15 @@ import { SessionListComponent } from './sessions/list/session-list.component';
 import { VenueInfoComponent } from './sessions/info/venue-info/venue-info.component';
 import { EventPickerComponent } from './schedule/picker/event-picker.component';
 import { ScheduleAddComponent } from './schedule/add/schedule-add.component';
+import { ScheduleListComponent } from './schedule/list/schedule-list.component';
+import { EditScheduleComponent } from './schedule/edit/edit-schedule.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'profile/schedule/:id', component: EditScheduleComponent, canActivate: [AuthGuard] },
+  { path: 'profile/schedule', component: ScheduleListComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: UserProfileComponent, canActivate: [AuthGuard] },
   { path: 'events/:id', component: EventInfoComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'events', component: EventListComponent, canActivate: [AuthGuard] },

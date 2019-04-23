@@ -1,3 +1,16 @@
-<p>
-  schedule-list works!
-</p>
+<h2>Your Schedule</h2>
+<div class="row" [formGroup]="searchForm">
+  <div class="col-md-6">
+    <label>Search:</label>
+    <input class="form-control" formControlName="query" placeholder="Enter text to search..." />
+  </div>
+</div>
+<br />
+<div class="list-group">
+  <a *ngFor="let event of events" class="list-group-item list-group-item-action" routerLink="/profile/schedule/{{ event.id }}">
+    {{ event.name }}
+    <span *ngIf="event.startDate >= new Date()" class="float-right">Starts: {{ event.Events.startDate | date:'short' }}</span>
+    <span *ngIf="isEventOngoing(event.Sessions)" class="float-right">Active</span>
+    <span *ngIf="!isEventOngoing(event.Sessions)" class="float-right">Finished</span>
+  </a>
+</div>

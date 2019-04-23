@@ -48,6 +48,12 @@
         <span class="text-danger">*</span> = Required
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Schedule</label>
+      <button type="button" class="btn btn-primary" routerLink="/profile/schedule">View</button>
+    </div>
+  </div>
   <br>
   <button type="submit" class="btn btn-primary" (click)="save()" [disabled]="userUpdateForm.invalid">Update</button>
   <div *ngIf="saved">Saved!</div>
