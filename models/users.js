@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         validate: {
           len: { args: [7, 20], msg: 'Phone number invalid.' },
-          //is: { args: ["/^(?:\(\d\d\d\)\s)?\d\d\d-?\d\d\d\d$/"], msg: 'Not a valid phone number.' }
+          is: { args: [/^(?:\(\d\d\d\)\s)?\d\d\d-?\d\d\d\d$/], msg: 'Not a valid phone number.' }
         },
       },
       userRoleId: {

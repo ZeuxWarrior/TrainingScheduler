@@ -14,7 +14,7 @@ export class UserProfileComponent {
       lastName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
-      phone: new FormControl('', [Validators.required]) //, Validators.pattern("/^(?:\(\d\d\d\)\s)?\d\d\d-?\d\d\d\d$/")])
+      phone: new FormControl('', [Validators.required, Validators.pattern(/^(?:\((\d\d\d)\)\s)?\d\d\d-?\d\d\d\d$/)])
   });
 
   saved = false;

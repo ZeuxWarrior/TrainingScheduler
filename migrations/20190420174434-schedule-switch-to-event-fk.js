@@ -2,40 +2,20 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.sequelize.query(queryInterface.QueryGenerator.dropForeignKeyQuery("Schedules","sessionId")).
+    return queryInterface.renameColumn("Schedules","sessionId","eventId").
       then((value1) => {
-        return queryInterface.renameColumn("Schedules","sessionId","eventId");
+        return queryInterface.sequelize.query("ALTER TABLE Schedules DROP FOREIGN KEY schedules_ibfk_2;");
       }).then((value2) => {
-        return queryInterface.changeColumn("Schedules","eventId", {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          unique: 'compositeSession',
-          references: {
-            model: 'Events',
-            key: 'id'
-          },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE'
-        });
+        return queryInterface.sequelize.query("ALTER TABLE Schedules ADD CONSTRAINT Schedules_eventId_foreign_idx FOREIGN KEY (eventId) REFERENCES Events(id);");
       });
     },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.sequelize.query(queryInterface.QueryGenerator.dropForeignKeyQuery("Schedules","eventId")).
+    return queryInterface.renameColumn("Schedules","eventId","sessionId").
       then((value1) => {
-        return queryInterface.renameColumn("Schedules","eventId","sessionId");
+        return queryInterface.sequelize.query("ALTER TABLE Schedules DROP FOREIGN KEY Schedules_eventId_foreign_idx;");
       }).then((value2) => {
-        return queryInterface.changeColumn("Schedules","sessionId", {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          unique: 'compositeSession',
-          references: {
-            model: 'Sessions',
-            key: 'id'
-          },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE'
-        });
+        return queryInterface.sequelize.query("ALTER TABLE Schedules ADD CONSTRAINT schedules_ibfk_2 FOREIGN KEY (sessionId) REFERENCES Sessions(id);");
       });
     }
 };
